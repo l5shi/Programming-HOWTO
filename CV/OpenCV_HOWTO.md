@@ -1,0 +1,43 @@
+
+# GUI Working with OpenCV
+
+* Qt: use OpenGL
+* ImGui: hosted on gitgub
+* [cvui](http://www.learnopencv.com/cvui-gui-lib-built-on-top-of-opencv-drawing-primitives/): C++ header only cross-platform UI lib. [Github location](https://github.com/Dovyski/cvui)
+* wxPython
+  * https://stackoverflow.com/questions/14804741/opencv-integration-with-wxpython
+  * https://stackoverflow.com/questions/35009984/get-stream-from-webcam-with-opencv-and-wxpython
+  * https://stackoverflow.com/questions/37961949/record-webcam-video-with-wxpython-open-cv-using-control-buttons
+  * https://stackoverflow.com/questions/24754265/displaying-videocapture-using-opencv-with-python-and-wxpython-in-a-wx-panel-sho
+
+
+# Homography with OpenCV
+
+http://www.learnopencv.com/homography-examples-using-opencv-python-c/
+
+
+# Animation
+
+```python
+import cv2
+import numpy as np
+import time
+
+Frame_out = np.zeros((500, 640, 4),np.uint8)
+
+a = 1
+
+while a<255:
+    # OpenCV uses BGR
+    cv2.rectangle(Frame_out,(a,a),(a*2,a*2),(0,0,255-a),0)
+    time.sleep(0.05)
+    cv2.imshow('Animation', Frame_out)
+    cv2.rectangle(Frame_out,(a,a),(a*2,a*2),(0,0,0),0)
+    a +=2
+    if(a > 254):
+        a = 1
+    k = cv2.waitKey(10)
+    if k == 27: break  # ESC to exit
+
+cv2.destroyAllWindows()
+```
