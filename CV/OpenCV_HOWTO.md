@@ -1,3 +1,7 @@
+From OpenCV 2.X OpenCV 3.0 a few things changed. Specifically:
+* `cv2.cv` doesn't exists in OpenCV 3.0. Use simply `cv2`
+* `cv2.cv.CV_CAP_XXX` becomes `cv2.CAP_XXX`
+* some defines changed, e.g. `CV_BGR2HSV` is now `COLOR_BGR2HSV`.
 
 # GUI Working with OpenCV
 
@@ -10,7 +14,13 @@
   * https://stackoverflow.com/questions/37961949/record-webcam-video-with-wxpython-open-cv-using-control-buttons
   * https://stackoverflow.com/questions/24754265/displaying-videocapture-using-opencv-with-python-and-wxpython-in-a-wx-panel-sho
 
+# Video Processing
 
+cv2 based Video Player: https://github.com/maximus009/VideoPlayer/blob/master/new_test_3.py#L27
+```python
+# specify which video frame to read
+cap.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, i)
+```
 # Homography with OpenCV
 
 http://www.learnopencv.com/homography-examples-using-opencv-python-c/
