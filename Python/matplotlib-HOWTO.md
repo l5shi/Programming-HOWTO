@@ -1,6 +1,67 @@
 matplotlib HOWTO
 
+# Concepts
+http://matplotlib.org/2.0.0/glossary/index.html
+Great article on speed-up animation explains how matplotlib works: https://stackoverflow.com/questions/8955869/why-is-plotting-with-matplotlib-so-slow
+http://bastibe.de/2013-05-30-speeding-up-matplotlib.html
+
+**Steps**:
+* **Figure**: data structure holds plotting objects such as ax, lines and etc. Plotting objects can be modified by `setp`, `set_data`, `set_ydata` and etc.
+  * **ax** contains **artists** accessed using `ax.get_children()`. Example artists:
+    * background `ax.patch`
+    * line returned by `plot()` function
+    * the spines `ax.spines`
+    * the axes `ax.xaxis` and `ax.yaxis`
+
+```python
+fig, ax = plt.subplots()
+```
+
+* **Canvas**: *contains* figure (`fig.canvas`)
+  * **Draw/Render** _existing_ plotting objects on Canvas: `ax.draw_artist(line)`
+  * Copy rendered lines to the drawing backend: `fig.canvas.update()`
+  * `fig.canvas.flush_events()` : w/o calling this, the plot is blank  
+
+```python
+# In wxPython, Canvas is derived from wx.Panel: https://matplotlib.org/api/backend_wxagg_api.html
+FigureCanvasWxAgg(parent, id, figure)
+```
+* **Show** plot window: `plt.show()`
+
+An example of fast re-drawing in annimation
+```python
+    line, = ax.plot(np.random.randn(200))  # create and draw plotting objects
+    fig.canvas.draw()  # draw_artist below can only be used after an initial draw which 
+                       # caches the render 
+    plt.show(block=False)  # show the plot window
+
+    tstart = time.time()
+    while time.time() - tstart < 2:
+        line.set_ydata(np.random.randn(200))
+
+        ax.draw_artist(ax.patch)  # background
+        ax.draw_artist(line)  # line
+        fig.canvas.update()       # copy the newly rendered lines to the drawing backend.
+        fig.canvas.flush_events() # needed: otherwise the plot is blank
+```
+
+
 # Animation
+
+real-time plotting in while loop with matplotlib
+https://stackoverflow.com/questions/11874767/real-time-plotting-in-while-loop-with-matplotlib
+```python
+plt.axis([0, 10, 0, 1])
+plt.ion() # enable interactive
+
+for i in range(10):
+    y = np.random.random()
+    plt.scatter(i, y) # better to use setp?
+    plt.pause(0.05) #draw the new data and run GUI event loop => like cv2.waitKey()?
+
+while True:
+    plt.pause(0.05)
+```
 
 ## Update `imshow` contents
 

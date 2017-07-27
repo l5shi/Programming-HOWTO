@@ -1,4 +1,19 @@
 
+# OO
+## Class Attributes
+
+```python
+class JsonParser(object):
+    DNV_IDX_FORMATTEDKEY    = 1
+
+ JsonParser.DNV_IDX_FORMATTEDKEY
+```
+
+## Inheritance
+```python
+class FigureFrameSelector(object):
+```
+
 # Python & OS Environments
 
 ## Python Environments
@@ -95,3 +110,19 @@ else:       from queue import Queue
 ```
 
 [A Queue based keyboard interruptable thread pool ](https://www.metachris.com/2016/04/python-threadpool/)
+
+# Exception
+
+```python
+class MyException(Exception):
+   def __init__(self, message, errors):
+       # Call the base class constructor with the parameters it needs
+       super(Exception, self).__init__(message)
+       # Now for your custom code...
+       self.errors = errors
+
+ try:
+     sel = int(sel)  # ',' to make it a tuple
+ except ValueError as ve:
+     raise MyException('selection must be a number', -1)
+```

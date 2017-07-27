@@ -56,3 +56,56 @@ To avoid flickering
 # once instead of OnPaint even if the window size has not been changed
 wx.Panel.__init__(self, parent, -1, style=wx.FULL_REPAINT_ON_RESIZE)
 ```
+
+# Window Splitter
+
+```python
+class AppFrame(wx.Frame):
+    def __init__(self, parent, title, videoFile):
+        wx.Frame.__init__(self, parent=parent, title=title) #, size=size)
+        self.mainPanel = AppMainPanel(self)
+        
+class AppMainPanel( wx.Panel ):
+    """
+    Parent-children Relationship:
+      Panel -> splitter -> top & bottom panes
+      
+    Programming Relationship:
+      Panel -> sizer -> splitter -> top & bottom panes
+    """
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent=parent)
+
+        self.horizontalSplitter = wx.SplitterWindow(self)
+        self.TopPane = TopPane(self.horizontalSplitter)
+        self.btmPane = BottomePane(self.horizontalSplitter)
+        self.horizontalSplitter.SplitHorizontally(self.TopPane, self.btmPane, 0)
+        self.horizontalSplitter.SetMinimumPaneSize(60)
+
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer.Add(self.horizontalSplitter, 1, wx.EXPAND)
+        self.SetSizer(self.sizer)
+
+class TopPane (wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent=parent)
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+
+    def OnPaint(self, evt):
+        dc = wx.BufferedPaintDC(self)
+        dc.SetBrush(wx.Brush(wx.BLACK, wx.SOLID))
+        tgtWidth, tgtHeight = self.GetSize()
+        dc.DrawRectangle(0, 0, tgtWidth, tgtHeight)
+
+class BottomePane (wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent=parent)
+        self.Bind(wx.EVT_PAINT, self.OnPaint)
+
+    def OnPaint(self, evt):
+        dc = wx.BufferedPaintDC(self)
+        dc.SetBrush(wx.Brush(wx.RED, wx.SOLID))
+        tgtWidth, tgtHeight = self.GetSize()
+        dc.DrawRectangle(0, 0, tgtWidth, tgtHeight)
+
+```
