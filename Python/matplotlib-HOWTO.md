@@ -1,4 +1,13 @@
 matplotlib HOWTO
+<!-- TOC -->
+
+- [Concepts](#concepts)
+- [Animation](#animation)
+    - [Update `imshow` contents](#update-imshow-contents)
+    - [`matplotlib.animation`](#matplotlibanimation)
+- [matplotlib Widgets](#matplotlib-widgets)
+
+<!-- /TOC -->
 
 # Concepts
 http://matplotlib.org/2.0.0/glossary/index.html
@@ -8,10 +17,11 @@ http://bastibe.de/2013-05-30-speeding-up-matplotlib.html
 **Steps**:
 * **Figure**: data structure holds plotting objects such as ax, lines and etc. Plotting objects can be modified by `setp`, `set_data`, `set_ydata` and etc.
   * **ax** contains **artists** accessed using `ax.get_children()`. Example artists:
-    * background `ax.patch`
+    * background `ax.patch`: `ax.draw_artist(ax.patch)`
+    * `ax.title`
     * line returned by `plot()` function
-    * the spines `ax.spines`
-    * the axes `ax.xaxis` and `ax.yaxis`
+    * the spines `ax.spines`: Spines are the lines connecting the axis tick marks and noting the boundaries of the data area. See [example](https://matplotlib.org/examples/ticks_and_spines/spines_demo.html)
+    * the axes `ax.xaxis` and `ax.yaxis`: tick marks/labels and etc.
 
 ```python
 fig, ax = plt.subplots()
@@ -20,6 +30,7 @@ fig, ax = plt.subplots()
 * **Canvas**: *contains* figure (`fig.canvas`)
   * **Draw/Render** _existing_ plotting objects on Canvas: `ax.draw_artist(line)`
   * Copy rendered lines to the drawing backend: `fig.canvas.update()`
+    * it is as fast as `fig.canvas.blit(ax.bbox)` but the latter leaks memory like crazy. 
   * `fig.canvas.flush_events()` : w/o calling this, the plot is blank  
 
 ```python
@@ -30,18 +41,27 @@ FigureCanvasWxAgg(parent, id, figure)
 
 An example of fast re-drawing in annimation
 ```python
-    line, = ax.plot(np.random.randn(200))  # create and draw plotting objects
-    fig.canvas.draw()  # draw_artist below can only be used after an initial draw which 
-                       # caches the render 
+    numPts = 4000
+    line, = ax.plot(np.random.randn(numPts))  # create and draw plotting objects
+    fig.canvas.draw()  # draw_artist below can only be used after an initial 
+                       # draw which caches the render 
+    # save what has been drawn: MUST after draw()
+    staticPart = fig.canvas.copy_from_bbox(ax.bbox) 
+
+    vl, = ax.plot((0,0), (-4, 4), 'b')
     plt.show(block=False)  # show the plot window
 
     tstart = time.time()
-    while time.time() - tstart < 2:
-        line.set_ydata(np.random.randn(200))
+    for t in xrange(numPts):
+        fig.canvas.restore_region( staticPart ) # restore static partE
 
-        ax.draw_artist(ax.patch)  # background
-        ax.draw_artist(line)  # line
-        fig.canvas.update()       # copy the newly rendered lines to the drawing backend.
+        vl.set_xdata((t,t))
+        ax.draw_artist(vl)
+        fig.canvas.update() # copy the newly rendered lines to the drawing backend.
+        # MUST use canvas.blit( ) with wx: transfer the region of the agg
+        # buffer defined by bbox to the display
+        # see https://matplotlib.org/api/backend_wxagg_api.html
+
         fig.canvas.flush_events() # needed: otherwise the plot is blank
 ```
 

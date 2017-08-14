@@ -1,3 +1,25 @@
+<!-- TOC -->
+
+- [OO](#oo)
+    - [Class Attributes](#class-attributes)
+    - [Inheritance](#inheritance)
+- [Python & OS Environments](#python--os-environments)
+    - [Python Environments](#python-environments)
+    - [OS environment](#os-environment)
+- [File Management](#file-management)
+    - [Check if it is an executiable](#check-if-it-is-an-executiable)
+- [String Processing](#string-processing)
+- [Debug](#debug)
+    - [assert](#assert)
+    - [Logging](#logging)
+- [Parallel Processing](#parallel-processing)
+    - [`multiprocessing.dummy`](#multiprocessingdummy)
+        - [`multiprocessing.dummy.ThreadPool`](#multiprocessingdummythreadpool)
+    - [`concurrent.futures` module in Python 3.x](#concurrentfutures-module-in-python-3x)
+    - [Queue: a multi-thread safe  data structure](#queue-a-multi-thread-safe--data-structure)
+- [Exception](#exception)
+
+<!-- /TOC -->
 
 # OO
 ## Class Attributes

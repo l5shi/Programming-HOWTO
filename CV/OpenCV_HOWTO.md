@@ -1,3 +1,12 @@
+<!-- TOC -->
+
+- [GUI Working with OpenCV](#gui-working-with-opencv)
+- [Video Processing](#video-processing)
+- [Homography with OpenCV](#homography-with-opencv)
+- [Animation](#animation)
+
+<!-- /TOC -->
+
 From OpenCV 2.X OpenCV 3.0 a few things changed. Specifically:
 * `cv2.cv` doesn't exists in OpenCV 3.0. Use simply `cv2`
 * `cv2.cv.CV_CAP_XXX` becomes `cv2.CAP_XXX`

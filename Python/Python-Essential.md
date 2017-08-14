@@ -22,3 +22,30 @@ class TimedFunction:
             print('{}\'s avg run time: {} ms'.format( self.sumRunTime / self.numRuns * 1000.0))
             self.numRuns, self.sumRunTime = 0, 0.0
 ```
+
+# Extend Basic Class
+
+## Extend `dict`
+
+```python
+class KeyCreatitonOrderDict (dict) :
+    """Class doc """
+    def __init__(self, *args, **kwArgs):
+        self.keyList = []
+        return super(KeyCreatitonOrderDict, self).__init__(*args, **kwArgs)
+
+    #override [] operator
+    def __getitem__(self, key):
+        if key in self:
+            return super(KeyCreatitonOrderDict, self).__getitem__(key)
+        else:
+            raise KeyError()
+
+    def __setitem__(self, key, value):
+        if key not in self:
+            self.keyList.append(key)
+        super(KeyCreatitonOrderDict, self).__setitem__(key, value)
+
+    def keys(self):
+        return self.keyList
+```        
