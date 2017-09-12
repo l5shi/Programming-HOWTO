@@ -14,9 +14,11 @@ By default, environments are installed into the `envs` directory in your conda d
 - In Windows, it is good practice to deactivate one environment before activating another.
 
 **Create Environments**
+
 ```shell
 conda create -n py36 python=3.6 anaconda
 ```
+
 * name `py36`
 * `anaconda` is the metapackage that includes all of the Python packages comprising the Anaconda distribution. 
 * packages and versions to install in this new environment: `python=3.6`, `numpy=1.7`, or multiple packages.
