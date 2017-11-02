@@ -2,6 +2,7 @@ matplotlib HOWTO
 <!-- TOC -->
 
 - [Concepts](#concepts)
+- [pylab](#pylab)
 - [Animation](#animation)
     - [Update `imshow` contents](#update-imshow-contents)
     - [`matplotlib.animation`](#matplotlibanimation)
@@ -9,7 +10,10 @@ matplotlib HOWTO
 
 <!-- /TOC -->
 
+tutorial: http://www.labri.fr/perso/nrougier/teaching/matplotlib/
+
 # Concepts
+
 http://matplotlib.org/2.0.0/glossary/index.html
 Great article on speed-up animation explains how matplotlib works: https://stackoverflow.com/questions/8955869/why-is-plotting-with-matplotlib-so-slow
 http://bastibe.de/2013-05-30-speeding-up-matplotlib.html
@@ -65,6 +69,9 @@ An example of fast re-drawing in annimation
         fig.canvas.flush_events() # needed: otherwise the plot is blank
 ```
 
+# pylab
+
+`pylab` is part of matplotlib (in `matplotlib.pylab`) and tries to give you a MatLab like environment. 
 
 # Animation
 

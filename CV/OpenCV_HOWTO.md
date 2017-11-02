@@ -12,6 +12,17 @@ From OpenCV 2.X OpenCV 3.0 a few things changed. Specifically:
 * `cv2.cv.CV_CAP_XXX` becomes `cv2.CAP_XXX`
 * some defines changed, e.g. `CV_BGR2HSV` is now `COLOR_BGR2HSV`.
 
+Find version info from source codes:
+>In C++ several macros are defined to easily detect the version — `CV_VERSION`,...
+
+>`grep -r --include="*.hpp" CV_VERSION *` 
+
+# Build OpenCV
+
+use cmake: straightforward.
+
+To use opencv, specify `OpenCV_DIR` as `<OpenCV_Root>/build`
+
 # GUI Working with OpenCV
 
 * Qt: use OpenGL

@@ -1,3 +1,27 @@
+<!-- TOC -->
+
+- [File I/O](#file-io)
+- [Functions are Objects](#functions-are-objects)
+    - [Define your own function object class](#define-your-own-function-object-class)
+- [Extend Basic Class](#extend-basic-class)
+    - [Extend `dict`](#extend-dict)
+
+<!-- /TOC -->
+
+# File I/O
+
+Read from stdin: 
+```python
+for line in sys.stdin:
+```
+
+Perl's `while(<>)` like interface:
+```python
+import fileinput
+for line in fileinput.input():
+```
+`fileinput` will loop through all the lines in the input specified as file names given in command-line arguments, or the standard input if no arguments are provided
+
 # Functions are Objects
 
 In Python,  functions are objects.

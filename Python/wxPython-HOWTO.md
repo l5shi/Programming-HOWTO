@@ -88,6 +88,9 @@ wx.Panel.__init__(self, parent, -1, style=wx.FULL_REPAINT_ON_RESIZE)
 
 # Controls
 
+[wxPython Widget Inspection Tool](https://wiki.wxpython.org/Widget%20Inspection%20Tool): show all the widgets
+
+
 ## List Controls
 
 * ListBox
