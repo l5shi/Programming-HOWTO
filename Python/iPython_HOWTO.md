@@ -10,7 +10,7 @@ On **remote** machine:
 
 
 On **local** machine:
-```shell
+```sh
 # -N: no remote command to be executed
 # -f: tell SSH to go to background
 # -L: list the port forwarding config: remote port 8889 to local port 8888
