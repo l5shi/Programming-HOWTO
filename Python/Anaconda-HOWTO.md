@@ -1,3 +1,12 @@
+<!-- TOC -->
+
+- [Conda](#conda)
+    - [Environments](#environments)
+        - [Activate/Deactiavte](#activatedeactiavte)
+            - [Linux](#linux)
+    - [Install Different Python Versions](#install-different-python-versions)
+
+<!-- /TOC -->
 # Conda
 
 ## Environments
@@ -34,6 +43,13 @@ In the environments list that displays, your _current_ environment is highlighte
 `activate` and `deactivate` are separate commands. NOT `conda` commands.
 
 It basically prepends the environment dir to the `PATH` environment variable, which ONLY works for `cmd.exe` on Windows (not ConsoleZ.exe, PowerShell and etc. See https://github.com/conda/conda/issues/1519 for possible fix)
+
+#### Linux
+```sh
+bash # if not in bash
+source activate py36  # activate is a bash script in the same folder as conda
+source deactivate
+```
 
 ## Install Different Python Versions
 [Use Conda to manage multiple python versions](https://conda.io/docs/user-guide/tasks/manage-python.html#installing-a-different-version-of-python)

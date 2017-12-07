@@ -1,5 +1,6 @@
 <!-- TOC -->
 
+- [Build OpenCV](#build-opencv)
 - [GUI Working with OpenCV](#gui-working-with-opencv)
 - [Video Processing](#video-processing)
 - [Homography with OpenCV](#homography-with-opencv)
