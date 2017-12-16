@@ -6,7 +6,11 @@
 See [Remote Access to IPython Notebooks via SSH](https://coderwall.com/p/ohk6cg/remote-access-to-ipython-notebooks-via-ssh)
 
 On **remote** machine:
-`jupyter notebook --no-browser --port=8889`
+```shell
+jupyter notebook --no-browser --port=8889
+
+jupyter notebook list  # list currently running server
+```
 
 
 On **local** machine:
