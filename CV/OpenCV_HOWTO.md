@@ -1,6 +1,7 @@
 <!-- TOC -->
 
 - [Build OpenCV](#build-opencv)
+    - [Example: build opencv 3.3 on Ubuntu 16.04](#example-build-opencv-33-on-ubuntu-1604)
 - [GUI Working with OpenCV](#gui-working-with-opencv)
 - [Video Processing](#video-processing)
 - [Homography with OpenCV](#homography-with-opencv)
@@ -23,6 +24,16 @@ Find version info from source codes:
 use cmake: straightforward.
 
 To use opencv, specify `OpenCV_DIR` as `<OpenCV_Root>/build`
+
+## Example: build opencv 3.3 on Ubuntu 16.04
+
+```sh
+1.	Download OpenCV3.3 source from (https://github.com/opencv/opencv/releases/tag/3.3.0)
+2.	Cd <OpenCV directory>
+3.	Mkdir build && cd build
+4.	Mkdir linux && cd linux
+cmake ../../ -DHAVE_LIBV4L=OFF -DCMAKE_BUILD_TYPE=RELEASE -DWITH_1394=OFF -DWITH_GTK=OFF -DWITH_JASPER=OFF -DBUILD_JPEG=ON -DBUILD_ZLIB=ON -DBUILD_SHARED_LIBS=OFF -DWITH_OPENEXR=OFF -DWITH_WEBP=OFF -DWITH_PNG=OFF -DWITH_TIFF=OFF -DHAVE_CAM4L2=OFF -DHAVE_VIDEOIO=OFF -DWITH_ITT=OFF -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_opencv_flann=OFF -DBUILD_opencv_shape=OFF -DBUILD_opencv_dnn=OFF -DBUILD_PACKAGE=OFF -DBUILD_PROTOBUF=OFF -DBUILD_WITH_DEBUG_INFO=OFF -DBUILD_opencv_apps=OFF -DWITH_GPHOTO=OFF -DWITH_GSTREAMER=OFF -DWITH_OPENCL=OFF -DWITH_MATLAB=OFF -DWITH_FFMPEG=OFF -DBUILD_opencv_videoio=OFF -DBUILD_opencv_videostab=OFF -DBUILD_opencv_video=OFF -DWITH_CUDA=OFF  -DCV_TRACE=OFF
+```
 
 # GUI Working with OpenCV
 
