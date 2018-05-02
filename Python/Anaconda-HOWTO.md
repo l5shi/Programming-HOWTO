@@ -9,6 +9,9 @@
 <!-- /TOC -->
 # Conda
 
+[keep track of pip-installed packages in an Conda environment
+](https://stackoverflow.com/questions/18640305/how-do-i-keep-track-of-pip-installed-packages-in-an-anaconda-conda-environment)
+
 ## Environments
 
 A conda environment is a directory that contains a specific collection of conda packages that you have installed. For example, you may have one environment with NumPy 1.7 and its dependencies, and another environment with NumPy 1.6 for legacy testing.
