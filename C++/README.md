@@ -1,5 +1,5 @@
 
-# New C++
+# New C++ Features
 
 ```c++
 auto adnn_model = std::make_shared<adnn::Net>();
@@ -7,6 +7,7 @@ auto adnn_v3_model = std::make_shared<adnn_v3::Net>();
 ```
 
 # Misc
+
 ## Profiling
 
 ```c++
