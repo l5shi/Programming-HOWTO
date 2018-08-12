@@ -2,7 +2,23 @@
 
 ## Examples
 
-2D DFT: http://micro.stanford.edu/wiki/Install_FFTW3#Parallel_MPI
+### 2D DFT
+
+http://micro.stanford.edu/wiki/Install_FFTW3#Parallel_MPI
+
+cmake file to make NDK build on Windows
+```cmake
+project(2dfft)
+
+include_directories("D:/code/fftw-3.3.8/api")
+link_directories("D:/code/fftw-3.3.8/build_android")
+
+add_executable(2dfft
+               simple_example.c
+)
+target_link_libraries(2dfft fftw3)
+```
+
 
 ## Basics
 
@@ -40,7 +56,9 @@ export CFLAGS_INC_DIR="-I$NDK_ROOT/toolchains/${ARCH_NAME}-${ARCH_VER}/prebuilt/
  # location to install the lib
 export DEST_DIR="$NDK_ROOT/toolchains/${ARCH_NAME}-${ARCH_VER}/prebuilt/linux-x86_64/user/"
 
-# PIE: need to create Position Indep Exe as required by Android 5+ "-mfloat-abi=softfp -mfpu=neon
+# -fPIE, -pie : need to create Position Indep Exe(PIE) as required by Android 5+ "-mfloat-abi=softfp -mfpu=neon
+# -O3 -DNDEBUG : optimization for release build
+# See https://www.rapidtables.com/code/linux/gcc/gcc-o.html
 ./configure --host=aarch64 --prefix=$DEST_DIR LIBS="-lc -lgcc" CFLAGS="$CFLAGS_INC_DIR -fPIE" LDFLAGS="-pie" --disable-fortran #--enable-neon 
 ```
 
