@@ -44,7 +44,8 @@ static void cpuid(int info[4], int infoType, int extra) {
 - Make a dumb lib `iob_func.lib` at `lib\Release` and add it to vcxproj
 ```c++
 FILE _iob[] = { *stdin, *stdout, *stderr }; 
-extern "C" FILE * __cdecl __iob_func(void) { return _iob; }
+//extern "C" FILE * __cdecl __iob_func(void) { return _iob; }
+extern "C" FILE * __cdecl __imp___iob_func(void) { return _iob; }
 ```
 
 Scripts to update all vcxproj files:
