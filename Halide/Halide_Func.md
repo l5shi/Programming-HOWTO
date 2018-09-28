@@ -1,3 +1,19 @@
+# Pure variables vs. RVar
+
+RVar: reduction variable represents a single dimension of a reduction domain (RDom). Don't construct them directly, instead construct an RDom. [see Halide API](http://halide-lang.org/docs/class_halide_1_1_r_var.html).
+
+<table>
+<tr>
+ <td>
+    <pre><code class="language-c++">
+const int x = 3;
+const string y = "foo";
+readonly Object obj = getObject();
+    </code></pre>
+ </td>
+</tr>
+</table>
+
 # Function Definition
 
 You can define a Func in multiple passes. [Halide tutorial code](http://halide-lang.org/docs/tutorial_2lesson_09_update_definitions_8cpp-example.html)
@@ -18,13 +34,17 @@ f(y, y + 1) = y + 8;
 f(y, x) = y - x;
 ```
 - **Rule on RHS**
-  - [**Recursive** reference](https://github.com/halide/Halide/issues/297): We imposed the rule that all **recursive** references to a Func on the **RHS** must contain the same **pure** vars in the same positions. This prevents all sorts of problems involving the _schedule changing the meaning_, by preventing all cross-talk between distinct values of the pure vars. That way it's safe to compute, recompute, cache, etc for any arbitrary domain of the pure vars.
+  - [**Recursive** reference](https://github.com/halide/Halide/issues/297): We imposed the rule that all **recursive** references to a Func on the **RHS** must contain the same **pure** vars in the same positions on LHS. This prevents all sorts of problems involving the _schedule changing the meaning_, by preventing all cross-talk between distinct values of the pure vars. That way it's safe to compute, recompute, cache, etc for any arbitrary domain of the pure vars.
+> **Illegal** to have pure vars in LHS and RVar in RHS in the same dimension. That will make the result schedule dependent.
 
   * **Free** variable: (variables **outside** reference to functions): *free* variables on the right-hand-side must appear on the left-side
 ```c++
+// OK
+f(x, 3) = f(x, 0) * f(x, 10);
+f(0, y) = f(0, y) / f(3, y);
+
 // 1st argument to f on the right-hand-side must be 'x', not 'x + 1'.
 f(x, 0)     = f(x + 1, 0);
-
 // Free variables appear on the right-hand-side but not the left-hand-side.
 f(3, 4) = x + y;
 ```
