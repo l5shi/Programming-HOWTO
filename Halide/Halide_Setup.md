@@ -17,6 +17,18 @@ git clone https://git.llvm.org/git/libcxxabi.git/
 git clone https://git.llvm.org/git/test-suite.git/
 ```
 
+Use cmake to build (example below is for Windows):
+```batch
+cmake^
+  -DCMAKE_INSTALL_PREFIX=../llvm-install^
+  -DLLVM_ENABLE_TERMINFO=OFF^
+  -DLLVM_TARGETS_TO_BUILD=X86;ARM;NVPTX;AArch64;Hexagon^
+  -DLLVM_ENABLE_ASSERTIONS=ON^
+  -DLLVM_BUILD_32_BITS=OFF^
+  -DCMAKE_BUILD_TYPE=Release^
+  -Thost=x64^
+  .. -G "Visual Studio 15 2017 Win64"
+```
 
 ## Compilation on Linux
 
