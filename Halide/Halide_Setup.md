@@ -4,6 +4,18 @@
 Get llvm/clang from github mirror
 http://llvm.org/docs/GettingStarted.html#checkout
 
+```shell
+cd llvm/tools
+git clone https://git.llvm.org/git/llvm.git/
+
+cd ../projects
+git clone https://git.llvm.org/git/clang.git/
+git clone https://git.llvm.org/git/compiler-rt.git/
+git clone https://git.llvm.org/git/openmp.git/
+git clone https://git.llvm.org/git/libcxx.git/
+git clone https://git.llvm.org/git/libcxxabi.git/
+git clone https://git.llvm.org/git/test-suite.git/
+```
 
 
 ## Compilation on Linux
