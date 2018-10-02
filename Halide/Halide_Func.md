@@ -1,5 +1,7 @@
+<<<<<<< HEAD
 <!-- TOC -->
 
+- [Advanced](#advanced)
 - [Basics](#basics)
     - [Function Definition](#function-definition)
         - [Pure Function Definition](#pure-function-definition)
@@ -13,6 +15,45 @@
 - [Func](#func)
 
 <!-- /TOC -->
+
+# Advanced
+
+```c++
+// Func.h
+inline Expr min(FuncRef a, FuncRef b) {return min(Expr(std::move(a)), Expr(std::move(b)));}
+
+// Halide::min defined in IROperator.h
+inline Expr min(Expr a, Expr b) {
+    user_assert(a.defined() && b.defined())
+    << "min of undefined Expr\n";
+    Internal::match_types(a, b);
+    return Internal::Min::make(std::move(a), std::move(b));
+}
+
+// Halide::Internal::Min::make in IR.cpp
+Expr Min::make(Expr a, Expr b) {
+    internal_assert(a.defined()) << "Min of undefined\n";
+    internal_assert(b.defined()) << "Min of undefined\n";
+    internal_assert(a.type() == b.type()) << "Min of mismatched types\n";
+
+    Min *node = new Min;
+    node->type = a.type();
+    node->a = std::move(a);
+    node->b = std::move(b);
+    return node;
+}
+
+// in IR.h
+/** The lesser of two values. */
+struct Min : public ExprNode<Min> {
+    Expr a, b;
+
+    static Expr make(Expr a, Expr b);
+
+    static const IRNodeType _node_type = IRNodeType::Min;
+};
+```
+
 
 # Basics
 
