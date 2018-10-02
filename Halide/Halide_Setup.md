@@ -28,6 +28,9 @@ cmake^
   -DCMAKE_BUILD_TYPE=Release^
   -Thost=x64^
   .. -G "Visual Studio 15 2017 Win64"
+  
+REM launch VS command window
+devenv /build Release LLVM.sln
 ```
 
 ## Compilation on Linux
