@@ -1,11 +1,10 @@
 
 # Install
 
-```shell
-llvm/clang from github mirror
-[http://llvm.org/docs/GettingStarted.html#checkout](http://llvm.org/docs/GettingStarted.html#checkout)
+Get llvm/clang from github mirror
+http://llvm.org/docs/GettingStarted.html#checkout
 
-```
+
 
 ## Compilation on Linux
 
