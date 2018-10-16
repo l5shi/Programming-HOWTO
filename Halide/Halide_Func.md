@@ -6,6 +6,7 @@
     - [Function Definition](#function-definition)
         - [Pure Function Definition](#pure-function-definition)
         - [Multi-pass function definition](#multi-pass-function-definition)
+            - [Left Hand Side](#left-hand-side)
             - [Schedule update steps](#schedule-update-steps)
     - [Scheduling](#scheduling)
         - [Multi-stage pipeline](#multi-stage-pipeline)
@@ -74,15 +75,31 @@ Halide::Buffer<uint8_t> output =
 
 ### Multi-pass function definition
 
+#### Left Hand Side
+
 ```c++
 Func f;
 f(x, y) = x * y;       // pure def
+
+// The followings are update definition
 f(x, 0) = f(x, 8);     // update def 0
 f(0, y) = f(8, y) + 2; // update def 1
+
+f(x, 17) = x + 8;
+f(0, y) = y * 8;
+f(x, x + 1) = x + 8;
+f(y/2, y) = f(0, y) * 17;
+
+for (int i = 0; i < 50; i++) 
+   f(x, i) = f(x, i) * f(x, i);
+// But it's more manageable and more flexible to put the loop
+// in the generated code. We do this by defining a "reduction
+// domain" and using it inside an update definition:
+RDom r(0, 50);
+f(x, r) = f(x, r) * f(x, r);
 ```
 
 ![](img/Halide-schedule-update-steps.png)
-
 
 #### Schedule update steps
 
