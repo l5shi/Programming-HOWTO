@@ -67,7 +67,7 @@ static void cpuid(int info[4], int infoType, int extra) {
 #### `unresolved external symbol __imp__fprintf and __imp____iob_func`
 [ Stackoverflow post on this](https://stackoverflow.com/questions/30412951/unresolved-external-symbol-imp-fprintf-and-imp-iob-func-sdl2)
 - Add `legacy_stdio_definitions.lib` to vcxproj
-- Make a dumb lib `iob.lib` at `lib\Release` and add it to vcxproj
+- Make a dumb lib `iob.lib` at `lib\Release` inside Halide's build folder and add it to vcxproj
 ```c++
 FILE _iob[] = { *stdin, *stdout, *stderr }; 
 //extern "C" FILE * __cdecl __iob_func(void) { return _iob; }
