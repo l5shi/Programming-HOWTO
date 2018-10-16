@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+<!-- TOC -->
+
+- [Advanced](#advanced)
+- [Basics](#basics)
+    - [Function Definition](#function-definition)
+        - [Pure Function Definition](#pure-function-definition)
+        - [Multi-pass function definition](#multi-pass-function-definition)
+            - [Left Hand Side](#left-hand-side)
+            - [Schedule update steps](#schedule-update-steps)
+    - [Scheduling](#scheduling)
+        - [Multi-stage pipeline](#multi-stage-pipeline)
+            - [Default schedule](#default-schedule)
+            - [`compute_root`](#compute_root)
+            - [`compute_at`](#compute_at)
+- [Func](#func)
+
+<!-- /TOC -->
+
 # Advanced
 
 ```c++
@@ -36,6 +55,7 @@ struct Min : public ExprNode<Min> {
 };
 ```
 
+
 # Basics
 
 Concepts: realize over a domain
@@ -59,10 +79,12 @@ Halide::Buffer<uint8_t> output =
 
 ```c++
 Func f;
-f(x, y) = x * y;
+f(x, y) = x * y;       // pure def
+
 // The followings are update definition
-f(x, 0) = f(x, 8);
-f(0, y) = f(8, y) + 2;
+f(x, 0) = f(x, 8);     // update def 0
+f(0, y) = f(8, y) + 2; // update def 1
+
 f(x, 17) = x + 8;
 f(0, y) = y * 8;
 f(x, x + 1) = x + 8;
@@ -77,19 +99,63 @@ RDom r(0, 50);
 f(x, r) = f(x, r) * f(x, r);
 ```
 
+![](img/Halide-schedule-update-steps.png)
+
+#### Schedule update steps
 
 ## Scheduling
+
+// Scheduling is done with respect to Vars of a Func (not RVar?), and
+// the Vars of a Func are shared across the pure and
+// update steps.
 
 Schedule - **`reorder(y,x)`**
 ![Schedule - reorder x and y](img/Halide-schedule-reorder-x-y.png)
 
 ### Multi-stage pipeline
 
-Default schedule
+#### Default schedule 
+- If the producer has only pure def, inline it (no intermediate storage)
 ![](img/Halide-schedule-default-inline.png)
 
-**`compute_root`**
+- If the producer has update steps, compute it in the innermost of their consumer
+![](img/Halide-schedule-default-multi-stage.png)
+
+#### `compute_root`
+
+[compute all of this function once ahead of time](http://halide-lang.org/docs/class_halide_1_1_func.html#a7f4db7e4884fe76399bf2a673567eab5)
 ![](img/Halide-schedule-compute-root.png)
+
+#### `compute_at`
+
+![](img/Halide-schedule-compute-at-pure-step.png)
+
+![](img/Halide-schedule-compute-at-update-step.png)
+
+// 3) producer.store_root().compute_at(x), which allocates
+// space for the consumer outside the loop over x, but fills
+// it in as needed inside the loop.
+![](img/Halide-schedule-compute-at-multi-steps.png)
+
+Schedule a producer under a reduction domain variable of the consumer.
+![](img/Halide-schedule-compute-at-update-step-Rvar.png)
+
+```
+
+##### Wrapper based work-around
+The consumer references the producer in multiple steps that do not share common variables. In this case neither `producer.compute_at(consumer, x)` nor `producer.compute_at(consumer, y)` will work, because either one fails to cover one of the uses of the producer. **Halide doesn't allow multiple different schedules for a single Func**. So we'd have to inline producer, or use producer.compute_root().
+
+```c++
+Func producer, consumer;
+producer(x, y) = (x * y) / 10 + 8;
+
+consumer(x, y) = x + y;
+consumer(x, 0) = producer(x, x); 
+consumer(0, y) = producer(y, 9-y);
+```
+
+Work-around
+![](img/Halide-schedule-compute-at-multi-steps-wrapper-work-arould.png)
 
 #### Out of bound
 
@@ -122,6 +188,9 @@ output(x, y, c) = cast<uint8_t>(blur_y(x, y, c));
 Buffer<uint8_t> result = output.realize(input.width(), input.height(), 3);
 
 ```
+### Multi-pass functions in Multi-stage pipeline
+
+
 
 ## Reduction Domain
 
