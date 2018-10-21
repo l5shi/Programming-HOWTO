@@ -82,3 +82,7 @@ Scripts to update all vcxproj files:
 ```shell
 grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;iob.lib;legacy_stdio_definitions.lib;/g'
 ```
+Then build it inside Visual Studio x64 native tool console
+```
+MSBuild.exe /m /t:Build /p:Configuration=Release .\ALL_BUILD.vcxproj
+```
