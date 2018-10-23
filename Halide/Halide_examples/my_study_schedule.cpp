@@ -35,6 +35,7 @@ int main(int argc, char **argv)
 	std::cout << std::endl;
 
 	reordered.print_loop_nest();
+
 #if 0
 	// Attempt 2:
 	Var x("x"), y("y");

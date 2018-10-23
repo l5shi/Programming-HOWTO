@@ -1,4 +1,16 @@
-Halide FFT test code
+# Halide Apps
+
+## Gaussian Pyramid Image Interpretation
+
+See [Gaussian Pyramid Image Interpretation](http://sepwww.stanford.edu/data/media/public/docs/sep124/ssen1/paper_html/node8.html#SECTION00040000000000000000) to recover missing part.
+
+Halide example uses 3x3 Gaussian filter.
+
+## FFT
+
+### Halide FFT test code
+
+
 
 ```c++
 void test14(){
