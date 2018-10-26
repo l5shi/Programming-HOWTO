@@ -2,6 +2,7 @@
 #include "Halide.h"
 
 using namespace Halide;
+using namespace std;
 
 #define TILE_SIZE  8
 #define NUM_IMGS   10
@@ -19,6 +20,26 @@ Func TransformImg( Func imgs_tiled )
 
 int main(int argc, char **argv)
 {
+	//// example from: https://stackoverflow.com/questions/43168885/is-there-any-way-to-combine-funcs-into-a-func-has-one-more-dimension
+	//Var x("x"), y("y");
+	//Func f("f"), g("g");
+	//RDom range(0, 3, 0, 3, "range"); // Form is min/extent, not start/end
+
+	//f(x, y) = 0; // Initial condition
+	//f(range.x, range.y) = f(range.x - 1, range.y - 1) + 1;
+	//f.trace_stores();
+
+	//g(x, y) = f(x, y);
+
+	//Buffer<int32_t> result = g.realize(3, 3);
+
+	//g.print_loop_nest();
+	//for (int r = 0; r < 3; r++) {
+	//	for (int c = 0; c < 3; c++)
+	//		cout << result(c, r) << ' ';
+	//	cout << endl;
+	//}
+#if 0
 #define NUM_ORIG_ELEM 6
 	int ref = 2;
 	Var x("x"), y("y");
@@ -28,14 +49,17 @@ int main(int argc, char **argv)
 	Func reordered("reordered");
 	reordered(x) = select(x < ref, orig(x), orig(x + 1));
 
-	reordered.bound(x, 0, NUM_ORIG_ELEM-1).unroll(x);
+	//reordered.bound(x, 0, NUM_ORIG_ELEM-1).unroll(x);
+	//reordered.bound(x, 0, 10).unroll(x);
+	reordered.unroll(x);
 	Buffer<int> result = reordered.realize(NUM_ORIG_ELEM - 1);
 	for (int i = 0; i < result.width(); i++)
 		std::cout << ' ' << result(i);
 	std::cout << std::endl;
 
 	reordered.print_loop_nest();
-#if 0
+#endif
+#if 1
 	// Attempt 2:
 	Var x("x"), y("y");
 	Func producer("producer");
