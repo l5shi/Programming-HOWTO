@@ -23,7 +23,9 @@ target_link_libraries(lesson_02_input_image
                      )
 endif(MSVC)
 
-add_executable(my_study_schedule                    my_study_schedule.cpp)                     
+add_executable(my_study_schedule                    my_study_schedule.cpp)       
+add_executable(extern_stage  extern_stage.cpp)              
+add_executable(test_fft test_fft.cpp)
 add_executable(lesson_03_debugging_1                    lesson_03_debugging_1.cpp)                     
 add_executable(lesson_04_debugging_2                    lesson_04_debugging_2.cpp)                     
 add_executable(lesson_05_scheduling_1                   lesson_05_scheduling_1.cpp)                    

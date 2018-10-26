@@ -49,6 +49,10 @@ sudo apt-get install libtinfo-dev
 
 ## Compilation with Visual Studio 2017
 
+```shell
+cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" ../halide
+```
+
 ### Issues
 
 #### `__cpuidex`: identifier not found
@@ -67,7 +71,7 @@ static void cpuid(int info[4], int infoType, int extra) {
 #### `unresolved external symbol __imp__fprintf and __imp____iob_func`
 [ Stackoverflow post on this](https://stackoverflow.com/questions/30412951/unresolved-external-symbol-imp-fprintf-and-imp-iob-func-sdl2)
 - Add `legacy_stdio_definitions.lib` to vcxproj
-- Make a dumb lib `iob.lib` at `lib\Release` and add it to vcxproj
+- Make a dumb lib `iob.lib` at `lib\Release` inside Halide's build folder (create `lib\Release` first) and add it to vcxproj
 ```c++
 FILE _iob[] = { *stdin, *stdout, *stderr }; 
 //extern "C" FILE * __cdecl __iob_func(void) { return _iob; }
@@ -77,4 +81,8 @@ extern "C" FILE * __cdecl __imp___iob_func(void) { return _iob; }
 Scripts to update all vcxproj files:
 ```shell
 grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;iob.lib;legacy_stdio_definitions.lib;/g'
+```
+Then build it inside Visual Studio x64 native tool console
+```
+MSBuild.exe /m /t:Build /p:Configuration=Release .\ALL_BUILD.vcxproj
 ```
