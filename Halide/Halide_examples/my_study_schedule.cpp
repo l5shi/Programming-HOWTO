@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 	//imgs_transformed.compute_root( );
 	//merged.reorder(ix, iy, c, tx, ty);
 	//imgs_transformed.compute_at( merged, c );
-	imgs_transformed.reorder(ix, iy, c, n, tx, ty);
+	imgs_transformed.reorder(ix, iy, c, n, tx, ty); 
 	imgs_transformed.compute_at(merged, tx);
 	imgs_transformed_wrap.reorder(ix, iy, c, n,	 tx, ty);
 	imgs_transformed_wrap.compute_at(merged, r);

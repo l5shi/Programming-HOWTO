@@ -12,6 +12,14 @@ A halide function represents one stage in a Halide pipeline, and is the unit by 
 ```
 is a ==handle== on the internal halide function that this represents.
 
+### Buffer to Func
+
+```c++
+Halide::Func::Func(Buffer< T > & im)
+```
+
+Construct a new [Func](http://halide-lang.org/docs/class_halide_1_1_func.html) to wrap a [Buffer](http://halide-lang.org/docs/class_halide_1_1_buffer.html). (from Halide doc)
+
 ## Expr
 
 A fragment of [Halide](http://halide-lang.org/docs/namespace_halide.html) syntax. It's implemented as reference-counted ==handle== to a concrete expression node, but it's immutable, so you can treat it as a value type.

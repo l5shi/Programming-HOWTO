@@ -1,3 +1,82 @@
+# Working with C/C++
+
+|         | Halide                                                       | C/C++ |
+| ------- | ------------------------------------------------------------ | ----- |
+| **AOT** | AOT routine's arguments are usually<br> - `Params`<br> - `ImageParams` |       |
+| **`define_extern`** | `ExternFuncArgument` may be<br>- `Func`<br>- `Expr`<br>- `Buffer` or `ImageParams` (AOT) | |
+
+
+
+
+## Call AOT from C/C++
+
+For AOT-compiled code, we need to explicitly declare the arguments to the routine. Arguments are usually:
+
+- `Params`
+- `ImageParams`
+
+```c++
+// see below for detailed definitions
+ImageParam input(type_of<uint8_t>(), 2);
+Param<uint8_t> offset;
+brighter(x, y) = input(x, y) + offset;
+brighter.compile_to_static_library()"lesson_10_halide", {input, offset}, "brighter");
+
+// prototype of AOT'ed function
+int brighter(halide_buffer_t *_input_buffer, uint8_t _offset, halide_buffer_t *_brighter_buffer);
+```
+
+| JIT  | AOT  |
+| ---- | ---- |
+| Buffer     |  ImageParam    |
+| Expr    |  Param    |
+
+Tutorial lesson 10
+
+
+```c++
+    // The pipeline will depend on one scalar parameter.
+    Param<uint8_t> offset;
+    // 1st constructor argument gives the type of a pixel, and the 2nd
+    // specifies the number of dimensions.
+	// Currently, four dimensions is the maximum for inputs and outputs.
+    ImageParam input(type_of<uint8_t>(), 2);
+    // If we were jit-compiling, these would just be an int and a
+    // Buffer, but because we want to compile the pipeline once and
+    // have it work for any value of the parameter, we need to make a
+    // Param object, which can be used like an Expr, and an ImageParam
+    // object, which can be used like a Buffer.
+    // Define the Func.
+    brighter(x, y) = input(x, y) + offset;
+```
+
+## Call C functions from Halide
+
+`ExternFuncArgument` may be
+
+- `Func`
+- `Buffer` or `ImageParam` (for AOT)
+- `Expr`
+
+int argument type: 
+
+- `test/correctness/skip_stages_external_array_functions.cpp`
+- `test/auto_schedule/extern.cpp`
+
+```c++
+f2.define_extern("call_counter", {f1, 1, 0}, UInt(8), 1);
+
+std::vector<ExternFuncArgument> args(3);
+    args[0] = f0;
+    args[1] = Expr(3);
+    args[2] = Expr(7);
+
+```
+
+
+
+
+
 # Halide Apps
 
 ## Gaussian Pyramid Image Interpretation
