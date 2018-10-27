@@ -39,7 +39,7 @@ sudo apt-get install libtinfo-dev
 ### Compilation with Visual Studio 2017
 
 ```shell
-cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" <halide_src_dir>
+cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 2017 Win64" <halide_src_dir>
 ```
 
 #### Issues
