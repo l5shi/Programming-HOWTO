@@ -39,7 +39,7 @@ sudo apt-get install libtinfo-dev
 ### Compilation with Visual Studio 2017
 
 ```shell
-cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" ../halide
+cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" <halide_src_dir>
 ```
 
 #### Issues
@@ -67,7 +67,7 @@ FILE _iob[] = { *stdin, *stdout, *stderr };
 extern "C" FILE * __cdecl __imp___iob_func(void) { return _iob; }
 ```
 
-Scripts to update all vcxproj files:
+Scripts to update all vcxproj files (use iob.lib's absolute path if it is in any lib path):
 ```shell
 grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;iob.lib;legacy_stdio_definitions.lib;/g'
 ```
