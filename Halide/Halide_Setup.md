@@ -1,5 +1,8 @@
 # Install
 
+Download pre-built binary from llvm web site.
+
+## Build LLVM Yourself
 Get llvm/clang from github mirror
 http://llvm.org/docs/GettingStarted.html#checkout
 
