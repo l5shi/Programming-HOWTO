@@ -8,9 +8,43 @@ A halide function represents one stage in a Halide pipeline, and is the unit by 
 
 ```c++
  class Func {
- 	Internal::Function func;
+ 	Internal::Function func; // A reference-counted handle to Halide's internal representation of
+  * a function. Similar to a front-end Func object, but with no
+  * syntactic sugar to help with definitions.
 ```
-is a ==handle== on the internal halide function that this represents.
+```c++
+//A fragment of front-end syntax of the form f(x, y, z), where x, y, z are Vars or Exprs.
+
+//If could be the left hand side of a definition or an update definition, or it could be a call to a function. We don't know until we see how this object gets used.
+class FuncRef {
+     Internal::Function func;
+```
+```c++
+class Function {
+      FunctionPtr contents;
+```
+```c++
+struct FunctionPtr {
+     /** A strong and weak pointer to the group. Only one of these
+      * should be non-zero. */
+     // @{
+     IntrusivePtr<FunctionGroup> strong;
+     FunctionGroup *weak = nullptr;
+```
+
+```c++
+/** Functions are allocated in groups for memory management. Each
+  * group has a ref count associated with it. All within-group
+  * references must be weak. If there are any references from outside
+  * the group, at least one must be strong.  Within-group references
+  * may form cycles, but there may not be reference cycles that span
+  * multiple groups. These rules are not enforced automatically. */
+ struct FunctionGroup;
+ 
+ /** The opaque struct describing a Halide function. Wrap it in a
+  * Function object to access it. */
+ struct FunctionContents;
+```
 
 ### Buffer to Func
 
