@@ -1,8 +1,10 @@
 # Install
 
+## Obtain LLVM
+
 Download pre-built binary from llvm web site.
 
-## Build LLVM Yourself
+### Build LLVM Yourself
 Get llvm/clang from github mirror
 http://llvm.org/docs/GettingStarted.html#checkout
 
@@ -36,7 +38,8 @@ REM launch VS command window
 devenv /build Release LLVM.sln
 ```
 
-## Compilation on Linux
+## Build Halid
+### Compilation on Linux
 
 ```shell
 sudo apt-get install libpng-dev
@@ -50,15 +53,15 @@ sudo apt-get install libtinfo-dev
 
 ```
 
-## Compilation with Visual Studio 2017
+### Compilation with Visual Studio 2017
 
 ```shell
 cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" ../halide
 ```
 
-### Issues
+#### Issues
 
-#### `__cpuidex`: identifier not found
+##### `__cpuidex`: identifier not found
 
 See https://github.com/halide/Halide/issues/3254
 > Adding `#include<intrin.h>` to `src/Target.cpp` seems to fix the problem (see below):
@@ -71,7 +74,7 @@ static void cpuid(int info[4], int infoType, int extra) {
 #else
 ```
 
-#### `unresolved external symbol __imp__fprintf and __imp____iob_func`
+##### `unresolved external symbol __imp__fprintf and __imp____iob_func`
 [ Stackoverflow post on this](https://stackoverflow.com/questions/30412951/unresolved-external-symbol-imp-fprintf-and-imp-iob-func-sdl2)
 - Add `legacy_stdio_definitions.lib` to vcxproj
 - Make a dumb lib `iob.lib` at `lib\Release` inside Halide's build folder (create `lib\Release` first) and add it to vcxproj
