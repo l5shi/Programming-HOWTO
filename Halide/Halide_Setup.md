@@ -1,28 +1,8 @@
 # Install
 
-## Obtain LLVM
+## Build LLVM
 
-Download pre-built binary from llvm web site.
-
-### Build LLVM Yourself
-Get llvm/clang from github mirror
-http://llvm.org/docs/GettingStarted.html#checkout
-
-```shell
-git clone https://git.llvm.org/git/llvm.git/
-
-cd llvm/tools
-git clone https://git.llvm.org/git/clang.git/
-
-cd ../projects
-git clone https://git.llvm.org/git/compiler-rt.git/
-git clone https://git.llvm.org/git/openmp.git/
-git clone https://git.llvm.org/git/libcxx.git/
-git clone https://git.llvm.org/git/libcxxabi.git/
-git clone https://git.llvm.org/git/test-suite.git/
-```
-
-Use cmake to build (example below is for Windows):
+Download release tar balls and then use cmake to build (example below is for Windows):
 ```batch
 cmake^
   -DCMAKE_INSTALL_PREFIX=../llvm-install^
