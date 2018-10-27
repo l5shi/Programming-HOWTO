@@ -19,6 +19,9 @@ devenv /build Release LLVM.sln
 ```
 
 ## Build Halid
+
+Define environment variable LLVM_CONFIG and CLANG set or add llvm-config and clang to your PATH.
+
 ### Compilation on Linux
 
 ```shell
