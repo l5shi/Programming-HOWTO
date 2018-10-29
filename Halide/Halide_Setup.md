@@ -15,7 +15,7 @@ cmake^
   .. -G "Visual Studio 15 2017 Win64"
   
 REM launch VS command window
-devenv /build Release LLVM.sln
+MSBuild.exe /m /t:Build /p:Configuration=Release .\INSTALL.vcxproj
 ```
 
 ## Build Halid
