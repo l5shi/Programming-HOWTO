@@ -23,7 +23,9 @@ Find version info from source codes:
 
 use cmake: straightforward.
 
-To use opencv, specify `OpenCV_DIR` as `<OpenCV_Root>/build`
+To use opencv, specify `OpenCV_DIR` as `<OpenCV_Root>/build/x64/vc15/lib`  See the end of this [OpenCV Issue](https://github.com/opencv/opencv/issues/6132)
+
+
 
 ## Example: build opencv 3.3 on Ubuntu 16.04
 
