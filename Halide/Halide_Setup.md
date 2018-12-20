@@ -44,7 +44,7 @@ cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G
 
 #### Issues
 
-##### `__cpuidex`: identifier not found
+##### `__cpuidex`: identifier not found (this issue has been closed)
 
 See https://github.com/halide/Halide/issues/3254
 > Adding `#include<intrin.h>` to `src/Target.cpp` seems to fix the problem (see below):
@@ -67,9 +67,12 @@ FILE _iob[] = { *stdin, *stdout, *stderr };
 extern "C" FILE * __cdecl __imp___iob_func(void) { return _iob; }
 ```
 
-Scripts to update all vcxproj files (use iob.lib's absolute path if it is in any lib path):
+Scripts to update all vcxproj files:
 ```shell
 grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;iob.lib;legacy_stdio_definitions.lib;/g'
+
+# use iob.lib's absolute path if it is NOT in any lib path
+grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;c:\\\\lib\\\\iob.lib;legacy_stdio_definitions.lib;/g'
 ```
 Then build it inside Visual Studio x64 native tool console
 ```
