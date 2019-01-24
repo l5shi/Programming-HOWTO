@@ -1,7 +1,14 @@
 # Install
 
-## Build LLVM
+## Install LLVM
 
+Do NOT use llvm7.0. Use llvm 6.0
+
+### Pre-build Binaries
+
+[Ubuntu18.04: use apt to install clang/llvm 6.0](https://askubuntu.com/questions/1058534/installing-clang-6-0-on-ubuntu-18-04-lts-bionic)
+
+### Build from Source
 Download release tar balls and then use cmake to build (example below is for Windows):
 ```batch
 cmake^
