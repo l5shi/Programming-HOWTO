@@ -3,7 +3,13 @@ cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 project(halide_examples)
 
 include_directories("D:/github/Halide/include" "D:/github/Halide/tools")
+if( CMAKE_BUILD_TYPE STREQUAL "Debug")
+# A separate folder as it needs to use llvm debug version
+link_directories("D:/github/Halide/build_win64_debug/lib/Debug")
+else()
 link_directories("D:/github/Halide/build_win64/lib/Release")
+endif()
+
 link_libraries("Halide")
 
 add_executable(lesson_01_basics  lesson_01_basics.cpp)        
@@ -18,7 +24,7 @@ target_link_libraries(lesson_02_input_image
 if(MSVC)
 # work-around for MSVC
 target_link_libraries(lesson_02_input_image 
-                     "D:/github/Halide/build_win64/lib/Release/iob.lib"
+                     "D:/github/Halide/hack/build_win64/Release/iob.lib"
                      "legacy_stdio_definitions.lib"
                      )
 endif(MSVC)
