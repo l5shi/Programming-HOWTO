@@ -125,6 +125,23 @@ gradient.unroll(x_inner);
 // the Vars of a Func are shared across the pure and
 // update steps.
 
+**Shorthand**
+
+```c++
+// http://halide-lang.org/docs/tutorial_2lesson_05_scheduling_1_8cpp-example.html#a10        
+gradient.split(x, x, x_inner, 2);
+gradient.unroll(x_inner);
+// The shorthand for this is:
+gradient.unroll(x, 2);
+
+gradient.vectorize(x, 4);
+// which is equivalent to:
+gradient.split(x, x, x_inner, 4);
+gradient.vectorize(x_inner);
+```
+
+
+
 Schedule - **`reorder(y,x)`**
 ![Schedule - reorder x and y](img/Halide-schedule-reorder-x-y.png)
 
