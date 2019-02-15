@@ -160,7 +160,26 @@ g(x, y) = f(x, y);
 Buffer<int32t> result = g.realize(3, 3);
 ```
 
+## AOT
 
+To use AOT generated codes, 
+
+- Include `HalideBuffer.h` to use `Halide::Runtime::Buffer`
+- Include `HalideRuntime.h` (NOT `Halide.h`)
+
+## Select
+
+According to [Halide creator](see https://stackoverflow.com/questions/37733563/halideexpr-is-not-contextually-convertible-to-bool-storing-values-of-fun)
+
+>  `select` is to Halide (an Expr which conditionally evaluates to one of two values) as if/else is to C (a statement which conditionally executes one of two sub-statements).
+
+```c++
+// select doc:
+//   Returns an expression similar to the ternary operator in C, 
+//   except that it always evaluates *all* arguments.
+//  select is to Halide (an Expr which conditionally evaluates to one of two values) 
+//  as if/else is to C (a statement which conditionally executes one of two sub-statements).
+```
 
 # Halide Types
 
