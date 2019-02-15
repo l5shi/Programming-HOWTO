@@ -8,6 +8,8 @@ Do NOT use llvm7.0. Use llvm 6.0
 
 [Ubuntu18.04: use apt to install clang/llvm 6.0](https://askubuntu.com/questions/1058534/installing-clang-6-0-on-ubuntu-18-04-lts-bionic)
 
+[Windows: download pre-built binary](http://releases.llvm.org/download.html)
+
 ### Build from Source
 *Steps*
 - git clone llvm from github and switch to branch release_60
