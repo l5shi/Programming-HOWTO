@@ -109,6 +109,23 @@ f(x, r) = f(x, r) * f(x, r);
 // the Vars of a Func are shared across the pure and
 // update steps.
 
+**Shorthand**
+
+```c++
+// http://halide-lang.org/docs/tutorial_2lesson_05_scheduling_1_8cpp-example.html#a10        
+gradient.split(x, x, x_inner, 2);
+gradient.unroll(x_inner);
+// The shorthand for this is:
+gradient.unroll(x, 2);
+
+gradient.vectorize(x, 4);
+// which is equivalent to:
+gradient.split(x, x, x_inner, 4);
+gradient.vectorize(x_inner);
+```
+
+
+
 Schedule - **`reorder(y,x)`**
 ![Schedule - reorder x and y](img/Halide-schedule-reorder-x-y.png)
 
@@ -145,7 +162,7 @@ Schedule a producer under a reduction domain variable of the consumer.
 ##### Wrapper based work-around
 The consumer references the producer in multiple steps that do not share common variables. In this case neither `producer.compute_at(consumer, x)` nor `producer.compute_at(consumer, y)` will work, because either one fails to cover one of the uses of the producer. **Halide doesn't allow multiple different schedules for a single Func**. So we'd have to inline producer, or use producer.compute_root().
 
-```c++
+​```c++
 Func producer, consumer;
 producer(x, y) = (x * y) / 10 + 8;
 

@@ -46,6 +46,15 @@ struct FunctionPtr {
  struct FunctionContents;
 ```
 
+### Pure/Init and Update Definition
+
+Func **update** definition 
+
+- can have `Expr` and `RDom` on LHS.
+- Pure `Var` can only appear unmodified on LHS and at the same location as in *pure* definition.
+
+See MIT slidedeck 4
+
 ### Buffer to Func
 
 ```c++
