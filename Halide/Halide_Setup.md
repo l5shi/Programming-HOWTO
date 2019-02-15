@@ -1,23 +1,19 @@
 # Install
 
-Get llvm/clang from github mirror
-http://llvm.org/docs/GettingStarted.html#checkout
+## Install LLVM
 
-```shell
-git clone https://git.llvm.org/git/llvm.git/
+Do NOT use llvm7.0. Use llvm 6.0
 
-cd llvm/tools
-git clone https://git.llvm.org/git/clang.git/
+### Pre-build Binaries
 
-cd ../projects
-git clone https://git.llvm.org/git/compiler-rt.git/
-git clone https://git.llvm.org/git/openmp.git/
-git clone https://git.llvm.org/git/libcxx.git/
-git clone https://git.llvm.org/git/libcxxabi.git/
-git clone https://git.llvm.org/git/test-suite.git/
-```
+[Ubuntu18.04: use apt to install clang/llvm 6.0](https://askubuntu.com/questions/1058534/installing-clang-6-0-on-ubuntu-18-04-lts-bionic)
 
-Use cmake to build (example below is for Windows):
+### Build from Source
+*Steps*
+- git clone llvm from github and switch to branch release_60
+- git clone clang from github to llvm\tools and switch to branch release_60
+- run cmake: see Halide github page for more details
+
 ```batch
 cmake^
   -DCMAKE_INSTALL_PREFIX=../llvm-install^
@@ -30,10 +26,14 @@ cmake^
   .. -G "Visual Studio 15 2017 Win64"
   
 REM launch VS command window
-devenv /build Release LLVM.sln
+MSBuild.exe /m /t:Build /p:Configuration=Release .\INSTALL.vcxproj
 ```
 
-## Compilation on Linux
+## Build Halid
+
+Define environment variable LLVM_CONFIG and CLANG set or add llvm-config and clang to your PATH.
+
+### Compilation on Linux
 
 ```shell
 sudo apt-get install libpng-dev
@@ -47,15 +47,15 @@ sudo apt-get install libtinfo-dev
 
 ```
 
-## Compilation with Visual Studio 2017
+### Compilation with Visual Studio 2017
 
 ```shell
-cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 Win64" ../halide
+cmake -DLLVM_DIR=<llvm_install_dir>/lib/cmake/llvm -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 15 2017 Win64" <halide_src_dir>
 ```
 
-### Issues
+#### Issues
 
-#### `__cpuidex`: identifier not found
+##### `__cpuidex`: identifier not found (this issue has been closed)
 
 See https://github.com/halide/Halide/issues/3254
 > Adding `#include<intrin.h>` to `src/Target.cpp` seems to fix the problem (see below):
@@ -68,7 +68,7 @@ static void cpuid(int info[4], int infoType, int extra) {
 #else
 ```
 
-#### `unresolved external symbol __imp__fprintf and __imp____iob_func`
+##### `unresolved external symbol __imp__fprintf and __imp____iob_func`
 [ Stackoverflow post on this](https://stackoverflow.com/questions/30412951/unresolved-external-symbol-imp-fprintf-and-imp-iob-func-sdl2)
 - Add `legacy_stdio_definitions.lib` to vcxproj
 - Make a dumb lib `iob.lib` at `lib\Release` inside Halide's build folder (create `lib\Release` first) and add it to vcxproj
@@ -81,6 +81,9 @@ extern "C" FILE * __cdecl __imp___iob_func(void) { return _iob; }
 Scripts to update all vcxproj files:
 ```shell
 grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;iob.lib;legacy_stdio_definitions.lib;/g'
+
+# use iob.lib's absolute path if it is NOT in any lib path
+grep -lrZ --include="*vcxproj" jpeg.lib * | xargs -0 sed -i 's/jpeg.lib;/jpeg.lib;c:\\\\lib\\\\iob.lib;legacy_stdio_definitions.lib;/g'
 ```
 Then build it inside Visual Studio x64 native tool console
 ```
