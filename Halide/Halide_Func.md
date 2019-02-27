@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-<!-- TOC -->
-
-- [Advanced](#advanced)
-- [Basics](#basics)
-    - [Function Definition](#function-definition)
-        - [Pure Function Definition](#pure-function-definition)
-        - [Multi-pass function definition](#multi-pass-function-definition)
-            - [Left Hand Side](#left-hand-side)
-            - [Schedule update steps](#schedule-update-steps)
-    - [Scheduling](#scheduling)
-        - [Multi-stage pipeline](#multi-stage-pipeline)
-            - [Default schedule](#default-schedule)
-            - [`compute_root`](#compute_root)
-            - [`compute_at`](#compute_at)
-- [Func](#func)
-
-<!-- /TOC -->
-
 # Advanced
 
 ```c++
@@ -244,6 +225,18 @@ for (int r_y = 0; r_y < input.height(); r_y++)
     for (int r_x = 0; r_x < input.width(); r_x++) 
         c_result[input(r_x, r_y)] += 1;
 ```
+
+## Parallelize/Vectorize Reduction Domain
+
+Use the followings to parallelize RDom ( by default sequential and can not be parallelized):
+
+- `allow_race_condition`
+
+- `rfactor`:  http://halide-lang.org/tutorials/tutorial_lesson_18_parallel_associative_reductions.html
+
+[Parallel Associative Reductions in Halide](https://andrew.adams.pub/par.pdf)
+
+
 
 # Function Definition
 
