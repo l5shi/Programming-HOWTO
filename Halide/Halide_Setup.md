@@ -6,9 +6,9 @@ Do NOT use llvm7.0. Use llvm 6.0
 
 ### Pre-build Binaries
 
-[Ubuntu18.04: use apt to install clang/llvm 6.0](https://askubuntu.com/questions/1058534/installing-clang-6-0-on-ubuntu-18-04-lts-bionic)
+- [Ubuntu18.04: use apt to install clang/llvm 6.0](https://askubuntu.com/questions/1058534/installing-clang-6-0-on-ubuntu-18-04-lts-bionic)
 
-Windows pre-built binary doesn't have llvm-config. Build from source instead.
+- **Windows** pre-built binary doesn't have llvm-config. Build from source instead.
 
 ### Build from Source
 *Steps*
@@ -36,6 +36,15 @@ MSBuild.exe /m /t:Build /p:Configuration=Release .\INSTALL.vcxproj
 Define environment variable LLVM_CONFIG and CLANG set or add llvm-config and clang to your PATH.
 
 ### Compilation on Linux
+
+**Use clang to build Halide**
+```shell
+# select clang as the default compile
+update-alternatives --config c++
+update-alternatives --config cc
+
+# run cmake to create makefile. The Makefile coming with Halide is for g++
+```
 
 ```shell
 sudo apt-get install libpng-dev
