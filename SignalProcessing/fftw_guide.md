@@ -30,7 +30,7 @@ typedef double fftw_complex[2];
 
 [Download pre-built FFTW binaries for Windows](http://www.fftw.org/install/windows.html)
 
-cmake build is experimental. It works for NDK on Windows. It doesn't support enabling neon.
+cmake build is experimental. It works for NDK on Windows (but ENABLE_FLOAT=1 doesn't really make floating point version). It doesn't support enabling neon.
 
 ### Android NDK build
 
