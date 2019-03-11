@@ -61,6 +61,7 @@ export DEST_DIR="$NDK_ROOT/toolchains/${ARCH_NAME}-${ARCH_VER}/prebuilt/linux-x8
 # -fPIE, -pie : need to create Position Indep Exe(PIE) as required by Android 5+ "-mfloat-abi=softfp -mfpu=neon
 # -O3 -DNDEBUG : optimization for release build
 # See https://www.rapidtables.com/code/linux/gcc/gcc-o.html
+# --enable-float : single floating point version
 ./configure --host=aarch64 --prefix=$DEST_DIR LIBS="-lc -lgcc" CFLAGS="$CFLAGS_INC_DIR -fPIE" LDFLAGS="-pie" --disable-fortran #--enable-neon 
 ```
 
