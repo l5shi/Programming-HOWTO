@@ -48,6 +48,7 @@ export PATH="$NDK_ROOT/toolchains/${ARCH_NAME}-${ARCH_VER}/prebuilt/linux-x86_64
 echo $PATH | tr ":" "\n"
 export SYS_ROOT="$NDK_ROOT/platforms/android-27/arch-arm64/"
 # clang or gcc: clang doesn't seem to work
+# ${ARCH_NAME}-gcc is no longer in NDK r19b
 export CC="${ARCH_NAME}-gcc --sysroot=$SYS_ROOT"
 #export CC="${NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --sysroot=$SYS_ROOT"
 export LD="${ARCH_NAME}-ld"
